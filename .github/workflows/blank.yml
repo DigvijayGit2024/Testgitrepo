@@ -1,38 +1,33 @@
-name: CI
+name: dockerlogin
 
-# Controls when the workflow will run
+
 on:
   # Triggers the workflow on push or pull request events but only for the "main" branch
   push:
-    branches: 
-      - main
+    branches: [ "main" ]
   pull_request:
     branches: [ "main" ]
-
+  workflow_dispatch:
 jobs:
-  lint:
+  LogintodockerhubDEV:
     runs-on: ubuntu-latest
+    environment: digvijaydev
     steps:
-      - uses: actions/checkout@v2
-      - run: echo "Hello world"
-  test:
+    - uses: actions/checkout@v3
+    - name: docker login
+      uses: docker/login-action@v2.1.0
+      with:
+       registry: registry-1.docker.io
+       username: ${{secrets.DOCKERHUBUSERNAME}}
+       password: ${{secrets.DOCKERHUBPASSWORD}}
+  LogintodockerhubQA:
     runs-on: ubuntu-latest
+    environment: digvijayqa
     steps:
-      - uses: actions/checkout@v2
-      - run: echo "Hello world"
-  publish:
-    runs-on: ubuntu-latest
-    needs:
-      - lint
-      - test
-    steps:
-      - uses: actions/checkout@v2
-      - run: echo "Hello world"
-  test1:
-    strategy:
-      matrix:
-        os: [ubuntu-latest, windows-latest, macos-latest ]
-    runs-on: ${{ matrix.os }}
-    steps:
-      - uses: actions/checkout@v2
-      - run: echo "hello Test"
+    - uses: actions/checkout@v3
+    - name: docker login
+      uses: docker/login-action@v2.1.0
+      with:
+       registry: registry-1.docker.io
+       username: ${{secrets.DOCKERHUBUSERNAME}}
+       password: ${{secrets.DOCKERHUBPASSWORD}}
