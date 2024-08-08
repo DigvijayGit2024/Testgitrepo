@@ -24,7 +24,7 @@ jobs:
     - name: Docker Tag
       run: docker tag hello-world digvijaygit2024/dockerdemorepository
     - name: Docker Push
-      run: docker pull digvijaygit2024/dockerdemorepository
+      run: docker push digvijaygit2024/dockerdemorepository
   LogintodockerhubQA:
     runs-on: ubuntu-latest
     environment: digvijayqa
